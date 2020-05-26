@@ -1,1 +1,1 @@
-This repo contains Tahlee's portfolio and STEP projects
+This repo contains Tahlee's portfolio and STEP projects.
