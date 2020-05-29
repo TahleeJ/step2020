@@ -1,28 +1,27 @@
-// Copyright 2019 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+var slideIndices = [1, 1, 1];
+var slideSections = ["ed-slides", "project-slides", "work-slides"];
 
-/**
- * Adds a random greeting to the page.
- */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+for (i = 0; i < 3; i++) {
+    showSlides(slideIndices[i], i);
+}
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+function plusSlides(n, o) {
+    showSlides(slideIndices[o] += n, o);
+}
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+function currentSlide(n) {
+    for (i = 0; i < 3; i++) {
+        showSlides(slideIndices[i] = n, i);
+    }
+}
+
+function showSlides(n, o) {
+  var i;
+  var slides = document.getElementsByClassName(slideSections[o]);
+  if (n > slides.length) {slideIndices[o] = 1}    
+  if (n < 1) {slideIndices[o] = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  slides[slideIndices[o]-1].style.display = "block";  
 }
