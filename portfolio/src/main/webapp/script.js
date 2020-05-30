@@ -5,16 +5,15 @@ for (i = 0; i < 3; i++) {
     showSlides(slideIndices[i], i);
 }
 
+// n represents whether the slide will switch to the next or previous slide
+// o represents which section of slides is receving the change as referenced by "slideSections"
 function plusSlides(n, o) {
-    showSlides(slideIndices[o] += n, o);
+    slideIndices[o] += n;
+    showSlides(slideIndices[o], o);
 }
 
-function currentSlide(n) {
-    for (i = 0; i < 3; i++) {
-        showSlides(slideIndices[i] = n, i);
-    }
-}
-
+// n represents whether the slide will switch to the next or previous slide
+// o represents which section of slides is receving the change as referenced by "slideSections"
 function showSlides(n, o) {
   var i;
   var slides = document.getElementsByClassName(slideSections[o]);
