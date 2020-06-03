@@ -14,19 +14,65 @@
 
 package com.google.sps.servlets;
 
+import com.google.gson.Gson;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
+
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    private static List<String> comments = new ArrayList<>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
+    // List<String> list = new ArrayList<>(Arrays.asList(new String[]{"First message", "Second message", "Third message"}));
+    String json = convertGson(comments);
+
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String comment = getComment(request.getParameter("comment-text"));
+    long timestamp = System.currentTimeMillis();
+
+    Entity newComment = new Entity("Comment");
+    newComment.setProperty("text", comment);
+    newComment.setProperty("time", timestamp);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(newComment);
+
+    response.sendRedirect("/index.html");
+  }
+
+  private String getComment(HttpServletRequest request) {
+      String commentString = request.getParameter("comment-text");
+
+      if (commentString.length() > 0) {
+          return commentString;
+      } else {
+          return "They thought...";
+      }
+  }
+
+  private String convertGson(List<String> element) {
+      Gson gson = new Gson();
+      String json = gson.toJson(element);
+      return json;
   }
 }
