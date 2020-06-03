@@ -5,9 +5,8 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComments()">
     <div id="content">
         <h2>About Me</h2>
         <div class="row" style="200px;">
@@ -20,7 +19,7 @@
             </div>
         </div>
 
-        <br>
+        <br></br>
 
         <h2>Professional Profiles</h2>
         <div class="row" style="height:150px;">
@@ -32,7 +31,7 @@
             </div>
         </div>
 
-        <br>
+        <br></br>
         
         <h2>Educational Background</h2>
         <div class="row" style="height:200px;">
@@ -59,12 +58,11 @@
             <a class="next" onclick="plusSlides(1, 0)">&#65310;</a>
         </div>            
 
-        <br>
+        <br></br>
 
         <h2>Projects</h2>
         <div class="row" style="height:500px;">
-            
-            <div class="project-slides">
+            <div class="project-slides" style="display:block;">
                 <div class="text" style="height:500px;">
                     <div id="work-text">
                         <p>In the summer of 2019, I participated in the CSSI program at Google. While there I learned the basics of how to develop the front end and back end of a website using CSS, Javascript, HTML, and Python and hosting it on App Engine. 
@@ -97,11 +95,11 @@
             <a class="next" onclick="plusSlides(1, 1)">&#65310;</a>
         </div>
 
-        <br>
+        <br></br>
 
         <h2>Work Experience</h2>
         <div class="row" style="height:400px;">  
-            <div class="work-slides">
+            <div class="work-slides" style="display:block;">
                 <div class="text" style="height:400px;">
                     <div>
                     <p>For a majority of my senior year in high school, I was a tutoring intern at a Tutoring Center location near my school. I tutored students K-12 for 10 hours per week in reading, writing, and math roughly 2 hours per day after school.</p> 
@@ -125,6 +123,22 @@
             <a class="prev" onclick="plusSlides(-1, 2)">&#65308;</a> 
             <a class="next" onclick="plusSlides(1, 2)">&#65310;</a>
         </div>
+
+        <h2>Comments</h2>
+        <div class="row" style="height=400px;">
+            <div class="comment-post" style="height:auto;">
+            <form action="/data" method="POST">
+                <p>Write your comment here:</p>
+                <input type="text" name="comment-text">
+                <br/><br/>
+
+                <input type="submit"/>
+            </form>
+            </div>
+
+            <div class="text" id="comment-box" style="height:auto;"></div>
+        </div>
     </div> 
   </body>
+  <script src="script.js"></script>
 </html>
