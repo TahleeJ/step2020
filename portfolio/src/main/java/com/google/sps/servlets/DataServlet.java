@@ -19,6 +19,11 @@ import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+
+import com.google.sps.data.Comment;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -28,51 +33,59 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
 
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private static List<String> comments = new ArrayList<>();
+    private Integer numComments = Comment.getNumComments();
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // List<String> list = new ArrayList<>(Arrays.asList(new String[]{"First message", "Second message", "Third message"}));
-    String json = convertGson(comments);
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
 
-    response.setContentType("application/json;");
-    response.getWriter().println(json);
-  }
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);
 
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getComment(request.getParameter("comment-text"));
-    long timestamp = System.currentTimeMillis();
+        List<Comment> comments = new ArrayList<>();
+        for (Entity entity : results.asIterable()) {
+        long id = entity.getKey().getId();
+        String text = (String) entity.getProperty("text");
+        long timestamp = (long) entity.getProperty("time");
 
-    Entity newComment = new Entity("Comment");
-    newComment.setProperty("text", comment);
-    newComment.setProperty("time", timestamp);
+        Comment comment = new Comment(id, text, timestamp);
+        comments.add(comment);
+    }
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(newComment);
+        Gson gson = new Gson();
 
-    response.sendRedirect("/index.html");
-  }
+        String json = "{";
+        json += "\"numComments\": \"" + numComments.toString() + "\", ";
+        json += "\"commentList\":" + gson.toJson(comments) + "}";
 
-  private String getComment(HttpServletRequest request) {
-      String commentString = request.getParameter("comment-text");
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
+    }
 
-      if (commentString.length() > 0) {
-          return commentString;
-      } else {
-          return "They thought...";
-      }
-  }
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String comment = request.getParameter("comment-text");
+        String tempNum = request.getParameter("num-comments");
+        long timestamp = System.currentTimeMillis();
+            
+        if (comment.length() > 0) {
+            Entity newComment = new Entity("Comment");
+            newComment.setProperty("text", comment);
+            newComment.setProperty("time", timestamp);
 
-  private String convertGson(List<String> element) {
-      Gson gson = new Gson();
-      String json = gson.toJson(element);
-      return json;
-  }
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            datastore.put(newComment);
+        }
+
+        if (tempNum.length() == 0 || Integer.parseInt(tempNum) > Comment.getNumComments()) {
+            numComments = Comment.getNumComments();
+        } else {
+            numComments = Integer.parseInt(tempNum);
+        }
+
+        response.sendRedirect("/index.html");
+    }
 }

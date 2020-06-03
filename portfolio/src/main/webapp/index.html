@@ -128,6 +128,9 @@
         <div class="row" style="height=400px;">
             <div class="comment-post" style="height:auto;">
             <form action="/data" method="POST">
+                <label for="numComments">The number of comments you would like displayed:</label>
+                <input type="number" id="numComments" name="num-comments" min="0">
+
                 <p>Write your comment here:</p>
                 <input type="text" name="comment-text">
                 <br/><br/>

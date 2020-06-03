@@ -25,28 +25,20 @@ function showSlides(nextSlide, slideSection) {
     slides[slideIndices[slideSection]-1].style.display = "block";  
 }
 
-// async function getHelloMessage() {
-//     const response = await fetch("/data");
-//     const message = await response.text();
-//     document.getElementById("message-container").innerText = message;
-// }
-
 function getComments() {
-   fetch('/data').then(response => response.json()).then((comments) => {
+   fetch('/data').then(response => response.json()).then((commentInfo) => {
     const commentBox = document.getElementById("comment-box");
+    const numComments = commentInfo.numComments;
+    const comments = commentInfo.commentList;
 
-    comments.forEach((comment) => {
-        commentBox.appendChild(createComment(comment));
-    })
-
-    // for (i = 0; i < comments.length; i++) {
-    //     commentBox.appendChild(createComment(comments[i]));
-    // }
+    for (i = 0; i < numComments; i++) {
+        commentBox.appendChild(createComment(comments[i]));
+    }
   });
 }
 
-function createComment(text) {
+function createComment(comment) {
     const p = document.createElement("p");
-    p.innerHTML = text;
+    p.innerHTML = comment.text;
     return p;
 }
