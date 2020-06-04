@@ -15,28 +15,24 @@
 package com.google.sps.servlets;
 
 import com.google.gson.Gson;
-
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
-
 import com.google.sps.data.Comment;
-
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.List;
-import java.util.ArrayList;
-
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private Integer numComments = Comment.getNumComments();
+    private static Integer numComments = Comment.getNumComments();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,13 +43,13 @@ public class DataServlet extends HttpServlet {
 
         List<Comment> comments = new ArrayList<>();
         for (Entity entity : results.asIterable()) {
-        long id = entity.getKey().getId();
-        String text = (String) entity.getProperty("text");
-        long timestamp = (long) entity.getProperty("time");
+            long id = entity.getKey().getId();
+            String text = (String) entity.getProperty("text");
+            long timestamp = (long) entity.getProperty("time");
 
-        Comment comment = new Comment(id, text, timestamp);
-        comments.add(comment);
-    }
+            Comment comment = new Comment(id, text, timestamp);
+            comments.add(comment);
+        }
 
         Gson gson = new Gson();
 
