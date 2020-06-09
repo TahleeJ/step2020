@@ -64,7 +64,6 @@ public class DataServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String comment = request.getParameter("comment-text");
-        // Integer tempNum = Integer.parseInt(request.getParameter("num-comments"));
         long timestamp = System.currentTimeMillis();
             
         if (comment.length() > 0) {

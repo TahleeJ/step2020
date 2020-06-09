@@ -39,10 +39,15 @@ function showSlides(nextSlide, slideSection) {
 
         if (slideSection > 0) {
             modals[i].style.display = "none";
-        }  
+        }
+
+        if (slideSection == 0) {
+            document.getElementById("major-container").style.display = "none";
+        } 
     }
 
-    slides[slideIndices[slideSection] - 1].style.display = "block"; 
+    slides[slideIndices[slideSection] - 1].style.display = "block";
+    console.log("Slide section" + slideSection);
 }
 
 function displayModal(modalb, modali, img, slide) {
@@ -56,15 +61,15 @@ function closeModal(modalb, slide) {
 }
 
 function openComments() {
-    document.getElementById("main").style.display = "none";
-    document.getElementById("comment-container").style.width = "40%"
+    document.getElementById("comment-open").style.display = "none";
+    document.getElementById("comment-container").style.width = "645px";
     document.getElementById("comment-container").style.display = "block";
 }
 
 function closeComments() {
     document.getElementById("comment-container").style.width = "0";
     document.getElementById("comment-container").style.display = "none";
-    document.getElementById("main").style.display = "block";
+    document.getElementById("comment-open").style.display = "block";
 }
 
 async function getComments() {
@@ -90,6 +95,16 @@ function createComment(comment) {
 
 function deleteAll() {
     fetch('/delete-data', {method: 'POST'}).then(getComments());
+}
+
+function displaySankey() {
+    document.getElementById("sankey-open").style.display = "none";
+    document.getElementById("major-container").style.display = "block";
+}
+
+function closeSankey() {
+    document.getElementById("major-container").style.display = "none";
+    document.getElementById("sankey-open").style.display = "block";
 }
 
 google.charts.load("current", {packages:["sankey"]});
@@ -146,11 +161,12 @@ function drawChart() {
     ]);
 
     var options = {
-        width: 1200,
+        width: 2400,
+        height: 1200,
         position: "center",
         sankey: {
         node: { label: { color: "#ffffff",
-                         fontSize: 15,
+                         fontSize: 30,
                          bold: true },
                 nodePadding: 50 },
         link: { colorMode: 'gradient' } }
