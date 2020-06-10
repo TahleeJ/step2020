@@ -30,8 +30,8 @@
                     </div>
                         
                     <div> 
-                        <input type="button" onclick="deleteAll()" value="Delete All"/>
-                        <form method="POST" onsubmit="getComments()">
+                        <form action="/data" method="POST" onsubmit="getComments()">
+                            <input type="button" onclick="deleteAll()" value="Delete All"/>
                             <input type="text" id="test" name="comment-text"/>
                             <input type="submit"/>
                         </form>
