@@ -47,7 +47,6 @@ function showSlides(nextSlide, slideSection) {
     }
 
     slides[slideIndices[slideSection] - 1].style.display = "block";
-    console.log("Slide section" + slideSection);
 }
 
 function displayModal(modalb, modali, img, slide) {
@@ -74,13 +73,18 @@ function closeComments() {
 
 async function getComments() {
     var numC = document.getElementById("numComments").value;
+    console.log(numC);
+    console.log(document.getElementById("test").value);
     const response = await fetch('/data?num-comments='+numC);
     const comments = await response.json();
     const commentBox = document.getElementById("comment-box");
     commentBox.innerHTML = '';
         
+    console.log(comments.length);
+
     comments.forEach((comment) => {
         commentBox.appendChild(createComment(comment));
+        console.log(1);
     });
 
     return false;
@@ -90,6 +94,7 @@ function createComment(comment) {
     const p = document.createElement("p");
     p.className = "comments-p";
     p.innerHTML = comment.text;
+    console.log(2);
     return p;
 }
 

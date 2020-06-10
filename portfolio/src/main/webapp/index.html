@@ -29,10 +29,10 @@
                         <p>Write your comment here:</p>
                     </div>
                         
-                    <div>    
-                        <form onsubmit="getComments();">
-                            <input type="button" onclick="deleteAll()" value="Delete All">
-                            <input type="text" name="comment-text">
+                    <div> 
+                        <input type="button" onclick="deleteAll()" value="Delete All"/>
+                        <form method="POST" onsubmit="getComments()">
+                            <input type="text" id="test" name="comment-text"/>
                             <input type="submit"/>
                         </form>
                         <!-- <input type="button" onclick="deleteAll()" value="Delete All">
