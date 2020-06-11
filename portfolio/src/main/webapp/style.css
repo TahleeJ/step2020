@@ -83,20 +83,21 @@ body {
 }
 
 .row {
+    display: flex;
+    flex-direction: row;
     width: 90%;
     position: relative;
     margin-top: 20px;
-}
-
-.ed-pics {
-    display: flex;
-    flex-direction: column;
+    z-index: -1;
 }
 
 .ed-slides, .project-slides, .work-slides {
     display: flex;
     flex-direction: row;
-    align-content: center;
+}
+
+.ed-pics, .project-pics, .work-pics {
+    height: 100%;
 }
 
 .prev, .next {
@@ -153,6 +154,10 @@ body {
     opacity: .7;
 }
 
+#professional-text {
+    width: 100%;
+}
+
 #work-text, #comment-box {
     display: flex;
     flex-direction: column;
@@ -178,10 +183,10 @@ body {
     transition: 0.3s;
 }
 
-.pic-box {
+/* .pic-box {
     height: auto;
     width: auto;
-}
+} */
 
 .project-pics:hover, .work-pics:hover {
     opacity: 0.7;
