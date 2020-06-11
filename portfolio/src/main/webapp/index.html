@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  </head>
-  <body onload="getComments()">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Portfolio</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    </head>
+    
+    <body onload="getComments()">
+        
+    <div id="main">
+        <button class="open-button" id="main" onclick="openComments()">&#9776; Comments</button>
+    </div>
+
+    <div id="comment-container" class="comment-bar" style="opacity:.9;">
+        <a href="javascript:void(0)" class="close-button" onclick="closeComments()">&times;</a>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+        <div><h2 style="color: white;">Comments</h2></div>
+            <div style="height=600px;" id="comments">
+                <div id="comment-post" style="height:auto; opacity:1; margin-bottom:20px;">
+                    <div>
+                        <label for="numComments">The number of comments you would like displayed:</label>
+                        <input type="number" id="numComments" name="num-comments" value="100" min="0" max="10">
+                        <button onclick="getComments()">Display</button>
+                    </div>
+
+                    <div>
+                        <p>Write your comment here:</p>
+                    </div>
+                        
+                    <div>    
+                        <form onsubmit="getComments();">
+                            <input type="button" onclick="deleteAll()" value="Delete All">
+                            <input type="text" name="comment-text">
+                            <input type="submit"/>
+                        </form>
+                        <!-- <input type="button" onclick="deleteAll()" value="Delete All">
+                        <input type="text" name="comment-text">
+                        <input type="button" onclick="getComments()" value="Post"> -->
+
+                    </div>
+
+                    <div class="text" id="comment-box" style="height:auto;"></div>
+                </div>                                      
+            </div>
+        </div>
+    </div>
+
     <div id="content">
         <h2>About Me</h2>
         <div class="row" style="200px;">
@@ -40,7 +80,7 @@
                     <p>I attended Hillgrove High School in Powder Springs, GA and graduated at the top of my class in 2019. Through the CS classes offerred there, I was able to learn an introduction to the Java, Python, HTML, and CSS languages.</p> 
                 </div>
 
-                <div class="pic-box" style="height:200px;">
+                <div class="ed-pics" style="height:200px;">
                     <img class="pic" src="images/hillgrove.jpg"/>
                 </div>
             </div>
@@ -50,7 +90,7 @@
                     <p>I am currently attending the Georgia Institute of Technology where I have extended my knowledge of the Java language with an emphasis on ADTs and algorithm efficiency.</p>
                 </div>
 
-                <div class="pic-box" style="height:200px;">
+                <div class="ed-pics" style="height:200px;">
                     <img class="pic" src="images/tech.jpeg"/>
                 </div>
             </div>
@@ -71,11 +111,13 @@
                         <p>The name of our website is called <a href="http://metwoapp.appspot.com">MeTwo!!!</a></p>
                     </div>
                 </div>
-
-                <div class="pic-box" style="height:500px;">
-                    <img id="cssi-pic" style="width:600px; height: 400px;" src="images/cssi.JPG"/>
+                <div class="pic-box">
+                    <img onclick="displayModal(0, 0, 1, 0)" class="project-pics" id="cssi-pic" style="width:300px; height: 200px;" src="images/cssi.JPG"/>
+                    <div id="proj-1" class="modal-1">
+                        <span onclick="closeModal(0, 0)" class="proj-close">&times;</span>
+                        <img class="modal-content-1">
+                    </div>
                 </div>
-                
             </div>
 
             <div class="project-slides" style="display:none;">
@@ -87,8 +129,12 @@
                     </div>
                 </div>
 
-                <div class="pic-box" style="height:500px;">
-                    <img id="appathon-pic" style="width:540px; height:405px;" src="images/appathon.jpg"/>
+                <div class="pic-box">
+                    <img onclick="displayModal(0, 0, 1, 1)" class="project-pics" id="appathon-pic" style="width:270px; height:202.5px;" src="images/appathon.jpg"/>
+                    <div id="proj-2" class="modal-1">
+                        <span onclick="closeModal(0, 1)" class="proj-close">&times;</span>
+                        <img class="modal-content-1">
+                    </div>
                 </div>
             </div>
             <a class="prev" onclick="plusSlides(-1, 1)">&#65308;</a> 
@@ -105,9 +151,13 @@
                     <p>For a majority of my senior year in high school, I was a tutoring intern at a Tutoring Center location near my school. I tutored students K-12 for 10 hours per week in reading, writing, and math roughly 2 hours per day after school.</p> 
                     </div>
                 </div>
+                <div class="pic-box">
+                    <img onclick="displayModal(1, 1, 2, 0)" class="work-pics" id="tutoring-pic" style="width:432px; height:216px;" src="images/the-tutoring-center.png" />
 
-                <div class="pic-box" style="height:400px;">
-                    <img id="tutoring-pic" style="width:432px; height:216px;" src="images/the-tutoring-center.png"/>
+                 <div id="work-1" class="modal-2">
+                    <span onclick="closeModal(1, 0)" class="work-close">&times;</span>
+                    <img class="modal-content-2" id="work-1-img">
+                </div>
                 </div>
             </div>
 
@@ -116,32 +166,19 @@
                     <p>In the summer of 2020 I participated in the STEP internship program at Google where I designed a personal portfolio website on Google App Engine and another website with two other interns.</p>
                 </div>
 
-                <div class="pic-box" style="height:400px;">
-                    <img id="step-pic" style="width:504px; height:378px;" src="images/step2020.jpg">
+                <div class="pic-box">
+                    <img onclick="displayModal(1, 1, 2, 1)" class="work-pics" id="step-pic" style="width:252px; height:189px;" src="images/step2020.jpg">
+
+                <div id="work-2" class="modal-2">
+                    <span onclick="closeModal(1, 1)" class="work-close">&times;</span>
+                     <img class="modal-content-2" id="work-2-img">
+                </div>
                 </div>
             </div>
             <a class="prev" onclick="plusSlides(-1, 2)">&#65308;</a> 
             <a class="next" onclick="plusSlides(1, 2)">&#65310;</a>
         </div>
-
-        <h2>Comments</h2>
-        <div class="row" style="height=400px;">
-            <div class="comment-post" style="height:auto;">
-            <form action="/data" method="POST">
-                <label for="numComments">The number of comments you would like displayed:</label>
-                <input type="number" id="numComments" name="num-comments" min="0">
-
-                <p>Write your comment here:</p>
-                <input type="text" name="comment-text">
-                <br/><br/>
-
-                <input type="submit"/>
-            </form>
-            </div>
-
-            <div class="text" id="comment-box" style="height:auto;"></div>
-        </div>
-    </div> 
+    </div>
   </body>
   <script src="script.js"></script>
 </html>

@@ -32,7 +32,6 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private static Integer numComments = Comment.getNumComments();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -41,30 +40,31 @@ public class DataServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
+        Integer numComments = Integer.parseInt(request.getParameter("num-comments"));
+
         List<Comment> comments = new ArrayList<>();
         for (Entity entity : results.asIterable()) {
-            long id = entity.getKey().getId();
-            String text = (String) entity.getProperty("text");
-            long timestamp = (long) entity.getProperty("time");
 
-            Comment comment = new Comment(id, text, timestamp);
-            comments.add(comment);
+            if (numComments > 0) {
+                long id = entity.getKey().getId();
+                String text = (String) entity.getProperty("text");
+                long timestamp = (long) entity.getProperty("time");
+
+                Comment comment = new Comment(id, text, timestamp);
+                comments.add(comment);
+                numComments--;
+            }
         }
 
         Gson gson = new Gson();
 
-        String json = "{";
-        json += "\"numComments\": \"" + numComments.toString() + "\", ";
-        json += "\"commentList\":" + gson.toJson(comments) + "}";
-
         response.setContentType("application/json;");
-        response.getWriter().println(json);
+        response.getWriter().println(gson.toJson(comments));
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String comment = request.getParameter("comment-text");
-        String tempNum = request.getParameter("num-comments");
         long timestamp = System.currentTimeMillis();
             
         if (comment.length() > 0) {
@@ -74,12 +74,6 @@ public class DataServlet extends HttpServlet {
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(newComment);
-        }
-
-        if (tempNum.length() == 0 || Integer.parseInt(tempNum) > Comment.getNumComments()) {
-            numComments = Comment.getNumComments();
-        } else {
-            numComments = Integer.parseInt(tempNum);
         }
 
         response.sendRedirect("/index.html");
