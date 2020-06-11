@@ -27,6 +27,11 @@ function showSlides(nextSlide, slideSection) {
         modals = document.getElementsByClassName(modalBoxes[slideSection - 1]);
     }
 
+    // The slides are meant to exist on a 1 to (slides.length) basis instead of a 0 to (slides.length - 1) basis because 
+    //      1 will be subtracted when it is time to set the display of the slide (first slide second slide instead of slide at index 0 etc.)
+    // If nextSlide is greater than the number of slides, the current index of this section will be set to the first slide
+    // If nextSlide is 0, the current index of this section will be set to the last slide
+    // If nextSlide is positive, the current slide will be set to the previous or next slide as done in the plusSlides function
     if (nextSlide > slides.length) {
         slideIndices[slideSection] = 1;
     } else if (nextSlide < 1) {
@@ -36,13 +41,13 @@ function showSlides(nextSlide, slideSection) {
     for (i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
 
-        if (slideSection > 0) {
-            modals[i].style.display = "none";
-        }
-
+        // If slideSection is 0, the container holding the Sankey diagram will be hidden until opened through the displaySankey function
+        // If the slideSection is not 0, the modals containing the enlarged versions of the displayed images will be hidden until the image is clicked on
         if (slideSection == 0) {
             document.getElementById("major-container").style.display = "none";
-        } 
+        } else {
+            modals[i].style.display = "none";
+        }       
     }
 
     slides[slideIndices[slideSection] - 1].style.display = "block";
