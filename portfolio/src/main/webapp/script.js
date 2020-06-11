@@ -87,7 +87,6 @@ function createComment(comment) {
     const p = document.createElement("p");
     p.className = "comments-p";
     p.innerHTML = comment.text;
-    console.log(2);
     return p;
 }
 
@@ -96,13 +95,14 @@ function deleteAll() {
 }
 
 function displaySankey() {
+    console.log("click");
     document.getElementById("sankey-open").style.display = "none";
-    document.getElementById("major-container").style.display = "flex";
+    document.getElementById("major-container").style.display = "block";
 }
 
 function closeSankey() {
     document.getElementById("major-container").style.display = "none";
-    document.getElementById("sankey-open").style.display = "flex";
+    document.getElementById("sankey-open").style.display = "block";
 }
 
 google.charts.load("current", {packages:["sankey"]});
@@ -162,6 +162,7 @@ function drawChart() {
         width: 2400,
         height: 1200,
         position: "center",
+        responsive: true,
         sankey: {
         node: { label: { color: "#ffffff",
                          fontSize: 30,
@@ -172,4 +173,5 @@ function drawChart() {
 
     var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
     chart.draw(data, options);
+    console.log("draw");
 }

@@ -9,9 +9,7 @@
     
     <body onload="getComments()">
         
-    <div id="comment-open">
-        <button class="open-button" id="comment-open" onclick="openComments()">&#9776; Comments</button>
-    </div>
+    <button class="open-button" id="comment-open" style="z-index:1;" onclick="openComments()">&#9776; Comments</button>
 
     <div id="comment-container" class="comment-bar" style="opacity:.9;">
         <a href="javascript:void(0)" class="close-button" onclick="closeComments()">&times;</a>
@@ -48,6 +46,12 @@
     </div>
 
     <div id="content">
+        <!-- <button class="open-button-sankey" id="sankey-open" onclick="displaySankey()">&#9860; Major Data</button>
+
+                    <div id="major-container" class="major-diagram">
+                        <span id="sankey-close" onclick="closeSankey()">&times;</span>
+                        <div id="sankey_multiple"></div>
+                    </div> -->
         <h2>About Me</h2>
         <div class="row" style="200px;">
             <div class="text" style="height:200px;">
@@ -90,10 +94,9 @@
                     <p>I am currently attending the Georgia Institute of Technology where I have extended my knowledge of the Java language with an emphasis on ADTs and algorithm efficiency.</p>
                 </div>
 
-                <div class="ed-pics" style="width:40%;">
+                <div class="ed-pics" style="width:40%; height:100%; display:flex; flex-direction:column;">
                     <img style="height:150px; width:150px;" src="images/tech.jpeg"/>
                     <button class="open-button-sankey" id="sankey-open" onclick="displaySankey()">&#9860; Major Data</button>
-
                     <div id="major-container" class="major-diagram">
                         <span id="sankey-close" onclick="closeSankey()">&times;</span>
                         <div id="sankey_multiple"></div>
