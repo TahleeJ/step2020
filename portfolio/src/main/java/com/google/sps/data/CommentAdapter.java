@@ -1,13 +1,12 @@
 package com.google.sps.data;
 
-import java.io.IOException;
-
 import com.google.gson.JsonParser;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.google.protobuf.util.JsonFormat;
 import com.google.sps.data.Comments.CommentObject;
+import java.io.IOException;
 
 public final class CommentAdapter extends TypeAdapter<CommentObject> {
 		/**

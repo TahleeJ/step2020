@@ -29,8 +29,7 @@ function showSlides(nextSlide, slideSection) {
 
     if (nextSlide > slides.length) {
         slideIndices[slideSection] = 1;
-    }
-    if (nextSlide < 1) {
+    } else if (nextSlide < 1) {
         slideIndices[slideSection] = slides.length;  
     }
 
