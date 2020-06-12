@@ -13,6 +13,7 @@ import com.google.sps.data.Comments.CommentObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.appengine.api.datastore.Blob;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,8 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
+        Query query = new Query("Comment");
+        // Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
@@ -35,16 +37,9 @@ public class DataServlet extends HttpServlet {
         for (Entity entity : results.asIterable()) {
             if (numComments > 0) {
                 long id = entity.getKey().getId();
-                String text = (String) entity.getProperty("text");
-                long timestamp = (long) entity.getProperty("time");
+                CommentObject comment = CommentObject.parseFrom(((Blob) entity.getProperty("commentInfo")).getBytes());
 
-                commentBuilder = CommentObject.newBuilder();
-                commentBuilder.setId(id);
-                commentBuilder.setText(text);
-                commentBuilder.setTime(timestamp);
-                CommentObject hold = commentBuilder.build();
-
-                comments.add(hold);
+                comments.add(comment);
                 numComments--;
             }
         }
@@ -58,15 +53,18 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String comment = request.getParameter("comment-text");
+        String commentText = request.getParameter("comment-text");
             
-        if (comment.length() > 0) {
+        if (commentText.length() > 0) {
             long timestamp = System.currentTimeMillis();
             
             Entity newComment = new Entity("Comment");
 
-            newComment.setProperty("text", comment);
-            newComment.setProperty("time", timestamp);
+            CommentObject.Builder commentBuilder = CommentObject.newBuilder();
+            commentBuilder.setText(commentText);
+            commentBuilder.setTime(timestamp);
+
+            newComment.setProperty("commentInfo", new Blob(commentBuilder.build().toByteArray()));
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(newComment);
