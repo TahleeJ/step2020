@@ -187,6 +187,11 @@ a {
     color: white;
 }
 
+#comment-box {
+    color: black;
+    background-color: rgba(255, 255, 255, 0.747);
+}
+
 .project-pics, .work-pics {
     border-radius: 5px;
     cursor: pointer;
