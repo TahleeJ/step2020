@@ -51,6 +51,7 @@ function showSlides(nextSlide, slideSection) {
     }
 
     slides[slideIndices[slideSection] - 1].style.display = "flex";
+    slides[slideIndices[slideSection] - 1].style.width = "100%";
 }
 
 function displayModal(modalb, modali, img, slide) {
@@ -164,9 +165,9 @@ function drawChart() {
 
     var options = {
         width: 2400,
-        height: 1200,
-        position: "center",
+        height: 900,
         responsive: true,
+        maintainAspectRatio: false,
         sankey: {
         node: { label: { color: "#ffffff",
                          fontSize: 30,
@@ -177,5 +178,4 @@ function drawChart() {
 
     var chart = new google.visualization.Sankey(document.getElementById('sankey_multiple'));
     chart.draw(data, options);
-    console.log("draw");
 }

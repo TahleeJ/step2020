@@ -3,12 +3,13 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-/* #comment-open {
-    
-    padding: 16px;
-    height: auto;
-    width: auto;
-} */
+h2 {
+    color: white;
+}
+
+a {
+    color: white;
+}
 
 .row {
     display: flex;
@@ -163,6 +164,7 @@ body {
 
 #professional-text {
     width: 100%;
+    background-color: rgba(20, 20, 19, 0.747);
 }
 
 #work-text, #comment-box {
@@ -175,13 +177,14 @@ body {
     height: auto;
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.747);
+    background-color: rgba(20, 20, 19, 0.747);
     opacity: .7;
     width: 60%;
     float: left;
     padding-left: 10px;
     padding-right: 10px;
     overflow: auto;
+    color: white;
 }
 
 .project-pics, .work-pics {
@@ -209,7 +212,7 @@ body {
 }
 
 #major-container {
-    padding-top: 50px;
+    padding-top: 200px;
 }
 
 .modal-content-1, .modal-content-2 {
@@ -220,8 +223,9 @@ body {
 }
 
 #sankey-multiple {
-    display: block;
     background-color: black;
+    width: 100%;
+    height: 50%;
 }
 
 .modal-content-1, .modal-content-2 {  
