@@ -1,17 +1,8 @@
 target/
 .idea
 
-step/portfolio/src/main/java/com/google/sps/data/
-protobuf-all-3.12.3.tar.gz
+*.jar
+*.tar.gz
 
 step/portfolio/src/main/java/com/google/sps/data/
 Comments.java
-
-step/portfolio/src/main/java/com/google/sps/data/
-protobuf-java-3.12.2-javadoc.jar
-
-step/portfolio/src/main/java/com/google/sps/data/
-google-java-format-1.8-all-deps.jar
-
-step/portfolio/src/main/java/com/google/sps/servlets/
-google-java-format-1.8-all-deps.jar
