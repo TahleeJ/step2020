@@ -33,6 +33,7 @@ public class DataServlet extends HttpServlet {
 
         List<CommentObject> comments = new ArrayList<>();
         for (Entity entity : results.asIterable()) {
+
             if (numComments > 0) {
                 long id = entity.getKey().getId();
                 String text = (String) entity.getProperty("text");
