@@ -1,0 +1,10 @@
+syntax = "proto2";
+
+option java_package = "com.google.sps.data";
+option java_outer_classname = "Comments";
+
+message CommentObject {
+    required int64 id = 1;
+    required string text = 2;
+    required int64 time = 3;
+}
