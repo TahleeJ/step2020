@@ -1,11 +1,18 @@
 package com.google.sps.servlets;
 
+<<<<<<< HEAD
+=======
+import com.google.appengine.api.datastore.Blob;
+>>>>>>> 8a932abf1d1fc83ce22d427482d3cfd25d9bb3e7
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+<<<<<<< HEAD
 import com.google.appengine.api.datastore.Query.SortDirection;
+=======
+>>>>>>> 8a932abf1d1fc83ce22d427482d3cfd25d9bb3e7
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.sps.data.CommentAdapter;
@@ -23,7 +30,7 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
+        Query query = new Query("Comment");
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
@@ -36,16 +43,10 @@ public class DataServlet extends HttpServlet {
 
             if (numComments > 0) {
                 long id = entity.getKey().getId();
-                String text = (String) entity.getProperty("text");
-                long timestamp = (long) entity.getProperty("time");
+                CommentObject comment = 
+                    CommentObject.parseFrom(((Blob) entity.getProperty("commentInfo")).getBytes());
 
-                commentBuilder = CommentObject.newBuilder();
-                commentBuilder.setId(id);
-                commentBuilder.setText(text);
-                commentBuilder.setTime(timestamp);
-                CommentObject hold = commentBuilder.build();
-
-                comments.add(hold);
+                comments.add(comment);
                 numComments--;
             }
         }
@@ -58,16 +59,19 @@ public class DataServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String comment = request.getParameter("comment-text");
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {        
+        String commentText = request.getParameter("comment-text");
             
-        if (comment.length() > 0) {
+        if (commentText.length() > 0) {
             long timestamp = System.currentTimeMillis();
             
             Entity newComment = new Entity("Comment");
 
-            newComment.setProperty("text", comment);
-            newComment.setProperty("time", timestamp);
+            CommentObject.Builder commentBuilder = CommentObject.newBuilder();
+            commentBuilder.setText(commentText);
+            commentBuilder.setTime(timestamp);
+
+            newComment.setProperty("commentInfo", new Blob(commentBuilder.build().toByteArray()));
 
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(newComment);

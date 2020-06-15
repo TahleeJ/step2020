@@ -1,7 +1,10 @@
 target/
 .idea
 
+<<<<<<< HEAD
 *.jar
+=======
+>>>>>>> 8a932abf1d1fc83ce22d427482d3cfd25d9bb3e7
 *.tar.gz
 
 step/portfolio/src/main/java/com/google/sps/data/
