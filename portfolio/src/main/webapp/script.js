@@ -166,8 +166,6 @@ function drawChart() {
     var options = {
         width: 2400,
         height: 900,
-        responsive: true,
-        maintainAspectRatio: false,
         sankey: {
         node: { label: { color: "#ffffff",
                          fontSize: 30,
