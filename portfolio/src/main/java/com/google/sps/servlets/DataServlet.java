@@ -1,18 +1,11 @@
 package com.google.sps.servlets;
 
-<<<<<<< HEAD
-=======
 import com.google.appengine.api.datastore.Blob;
->>>>>>> 8a932abf1d1fc83ce22d427482d3cfd25d9bb3e7
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
-<<<<<<< HEAD
-import com.google.appengine.api.datastore.Query.SortDirection;
-=======
->>>>>>> 8a932abf1d1fc83ce22d427482d3cfd25d9bb3e7
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.sps.data.CommentAdapter;
