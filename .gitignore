@@ -1,6 +1,7 @@
 target/
 .idea
 
+*.jar
 *.tar.gz
 
 step/portfolio/src/main/java/com/google/sps/data/
