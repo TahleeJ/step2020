@@ -52,7 +52,7 @@ public class DataServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {        
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String commentText = request.getParameter("comment-text");
             
         if (commentText.length() > 0) {
