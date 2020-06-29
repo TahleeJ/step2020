@@ -208,26 +208,26 @@ public final class FindMeetingQuery {
     private static boolean attends(Event event, MeetingRequest request) {
         boolean included = false;
 
-        if (event != null) {
-            Collection<String> attendees = event.getAttendees();
-
-            for (String eventAttendee : attendees) {
-                if (request.getOptionalAttendees().contains(eventAttendee)) {
-                    if ((int) event.getWhen().duration() < TimeRange.WHOLE_DAY.duration()) {
-                        included = true;
-                        optionalEvents.add(event);
-                    }
-
-                    break;
-                } else if (request.getAttendees().contains(eventAttendee)) {
-                    included = true;
-                    break;
-                }
-            }
-
-            return included;
-        } else {
-            return included;
+        if (event == null) {
+            return false;
         }
+
+        Collection<String> attendees = event.getAttendees();
+
+        for (String eventAttendee : attendees) {
+            if (request.getOptionalAttendees().contains(eventAttendee)) {
+                if ((int) event.getWhen().duration() < TimeRange.WHOLE_DAY.duration()) {
+                    included = true;
+                    optionalEvents.add(event);
+                }
+
+                break;
+            } else if (request.getAttendees().contains(eventAttendee)) {
+                included = true;
+                break;
+            }
+        }
+
+        return included;
     }
 }
