@@ -224,8 +224,10 @@ public final class FindMeetingQuery {
                     break;
                 }
             }
-        }
 
-        return included;
+            return included;
+        } else {
+            return included;
+        }
     }
 }
